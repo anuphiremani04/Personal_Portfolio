@@ -12,6 +12,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script>
     (function () {
+      const isMobileViewport = window.matchMedia("(max-width: 900px), (hover: none) and (pointer: coarse)").matches;
+
+      // Mobile browsers can hold stale cached HTML after deployment.
+      // Force one cache-busted refresh per tab session.
+      if (isMobileViewport) {
+        try {
+          const url = new URL(window.location.href);
+          const alreadyBusted = url.searchParams.has("cb");
+          const refreshedThisSession = sessionStorage.getItem("mobile-cache-busted") === "1";
+
+          if (!alreadyBusted && !refreshedThisSession) {
+            sessionStorage.setItem("mobile-cache-busted", "1");
+            url.searchParams.set("cb", String(Date.now()));
+            window.location.replace(url.toString());
+            return;
+          }
+
+          if (alreadyBusted) {
+            sessionStorage.setItem("mobile-cache-busted", "1");
+          }
+        } catch {
+          // Keep normal page flow if URL/session APIs are restricted.
+        }
+      }
+
       const storedTheme = localStorage.getItem("portfolio-theme");
       const preferredTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
       const initialTheme = storedTheme || preferredTheme;
