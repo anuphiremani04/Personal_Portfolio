@@ -64,6 +64,20 @@
   --solar-opacity: 0.8;
 }
 
+@media (max-width: 900px) {
+  [data-theme="light"] {
+    --text-main: #0f1f36;
+    --text-soft: #2f4f76;
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(29, 63, 110, 0.3);
+    --surface-nav: rgba(255, 255, 255, 0.94);
+    --surface-nav-border: rgba(29, 63, 110, 0.22);
+    --surface-card: rgba(255, 255, 255, 0.88);
+    --surface-card-border: rgba(29, 63, 110, 0.28);
+    --solar-opacity: 0.34;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -1793,6 +1807,27 @@ body,
 }
 
 @media (hover: none) and (pointer: coarse) {
+  .solar-system-bg,
+  .blob,
+  #particles-canvas {
+    display: none;
+  }
+
+  .bg-gradient {
+    opacity: 0.42;
+  }
+
+  [data-theme="light"] .bg-gradient {
+    opacity: 0.32;
+  }
+
+  .reveal,
+  .scroll-animate {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
   .btn:hover,
   .social-link:hover,
   .widget:hover,

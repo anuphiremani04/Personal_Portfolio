@@ -23,6 +23,10 @@ const themeToggle = document.getElementById("theme-toggle");
 const PROJECT_IMAGE_COUNT = 20;
 let releaseProjectModalTrap = null;
 
+function isMobilePerformanceMode() {
+  return window.matchMedia("(max-width: 900px), (hover: none) and (pointer: coarse)").matches;
+}
+
 function normalizeProjectImages(projectList, startIndex = 0) {
   return projectList.map((project, index) => ({
     ...project,
@@ -257,6 +261,10 @@ function initTyping() {
 }
 
 function renderOrbitSystem() {
+  if (!orbitsEl || !orbitCarousel || !orbitTooltip || !orbitWrap) {
+    return;
+  }
+
   const categories = {
     "Web Development": [],
     "Programming Languages": [],
@@ -290,6 +298,10 @@ function renderOrbitSystem() {
   mainRing.style.width = `${ringSize}px`;
   mainRing.style.height = `${ringSize}px`;
   const total = currentSkills.length;
+  if (!total) {
+    orbitCarousel.innerHTML = "";
+    return;
+  }
 
   currentSkills.forEach((skill, index) => {
     const angle = (Math.PI * 2 * index) / total;
@@ -381,6 +393,10 @@ function renderOrbitSystem() {
 }
 
 function renderProjects() {
+  if (!projectsGrid) {
+    return;
+  }
+
   projectsGrid.innerHTML = activeProjects
     .map(
       (project, idx) => {
@@ -410,6 +426,9 @@ function renderProjects() {
 
   document.querySelectorAll(".project-card").forEach((card) => {
     const inner = card.querySelector(".project-inner");
+    if (!inner) {
+      return;
+    }
 
     card.addEventListener("mousemove", (event) => {
       const rect = card.getBoundingClientRect();
@@ -445,6 +464,14 @@ function renderProjects() {
 }
 
 function openModal(project, projectIndex = 0) {
+  if (!modal || !modalTitle || !modalDescription || !modalImage || !modalTags || !modalGithub || !modalLive) {
+    return;
+  }
+
+  if (!project || typeof project !== "object") {
+    return;
+  }
+
   modalTitle.textContent = project.title || "Untitled Project";
   modalDescription.textContent = project.description || "No description available.";
   modalImage.src = sanitizeUrl(project.image || getProjectImage(projectIndex), getProjectImage(projectIndex));
@@ -478,6 +505,23 @@ function closeModal() {
 
 function initRevealOnScroll() {
   const revealElements = [...document.querySelectorAll(".reveal")];
+
+  if (isMobilePerformanceMode()) {
+    revealElements.forEach((el) => {
+      el.classList.add("visible");
+    });
+
+    const scrollAnimatedElements = document.querySelectorAll(
+      ".about-card, .project-inner, .widget, .social-link, .orbit-chip, .contact-panel, .social-panel"
+    );
+    scrollAnimatedElements.forEach((el) => {
+      el.classList.remove("scroll-animate");
+      el.classList.add("in-view");
+      el.style.removeProperty("--scroll-delay");
+    });
+    return;
+  }
+
   const sectionCounters = {
     about: 0,
     projects: 0,
@@ -523,6 +567,17 @@ function initRevealOnScroll() {
     sectionCounters.default += 1;
     el.classList.add(fallbackVariant === 1 ? "reveal-left" : fallbackVariant === 2 ? "reveal-right" : "reveal-up");
   });
+
+  if (typeof IntersectionObserver !== "function") {
+    revealElements.forEach((el) => el.classList.add("visible"));
+    document
+      .querySelectorAll(".about-card, .project-inner, .widget, .social-link, .orbit-chip, .contact-panel, .social-panel")
+      .forEach((el) => {
+        el.classList.remove("scroll-animate");
+        el.classList.add("in-view");
+      });
+    return;
+  }
 
   const revealObserver = new IntersectionObserver(
     (entries) => {
@@ -694,6 +749,10 @@ function initScrollTop() {
 function animateMetrics() {
   const projectCountEl = document.getElementById("projects-count");
   const techCountEl = document.getElementById("tech-count");
+  if (!projectCountEl || !techCountEl) {
+    return;
+  }
+
   const currentSkills = skillManager ? skillManager.getSkills() : skills;
   const values = [activeProjects.length, currentSkills.length];
   const targets = [projectCountEl, techCountEl];
@@ -735,7 +794,8 @@ function initParticles() {
   }
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion) {
+  if (reduceMotion || isMobilePerformanceMode()) {
+    canvas.style.display = "none";
     return;
   }
 
@@ -805,7 +865,8 @@ function initSpaceParallax() {
   }
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion) {
+  if (reduceMotion || isMobilePerformanceMode()) {
+    solar.style.transform = "translate(-50%, -50%)";
     return;
   }
 
