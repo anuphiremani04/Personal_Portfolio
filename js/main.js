@@ -505,22 +505,7 @@ function closeModal() {
 
 function initRevealOnScroll() {
   const revealElements = [...document.querySelectorAll(".reveal")];
-
-  if (isMobilePerformanceMode()) {
-    revealElements.forEach((el) => {
-      el.classList.add("visible");
-    });
-
-    const scrollAnimatedElements = document.querySelectorAll(
-      ".about-card, .project-inner, .widget, .social-link, .orbit-chip, .contact-panel, .social-panel"
-    );
-    scrollAnimatedElements.forEach((el) => {
-      el.classList.remove("scroll-animate");
-      el.classList.add("in-view");
-      el.style.removeProperty("--scroll-delay");
-    });
-    return;
-  }
+  const mobileLite = isMobilePerformanceMode();
 
   const sectionCounters = {
     about: 0,
@@ -528,8 +513,13 @@ function initRevealOnScroll() {
     default: 0
   };
 
-  revealElements.forEach((el, index) => {
+  revealElements.forEach((el) => {
     if (el.classList.contains("reveal-up") || el.classList.contains("reveal-left") || el.classList.contains("reveal-right")) {
+      return;
+    }
+
+    if (mobileLite) {
+      el.classList.add("reveal-up");
       return;
     }
 
@@ -588,7 +578,10 @@ function initRevealOnScroll() {
         }
       });
     },
-    { threshold: 0.18, rootMargin: "0px 0px -6% 0px" }
+    {
+      threshold: mobileLite ? 0.08 : 0.18,
+      rootMargin: mobileLite ? "0px 0px -2% 0px" : "0px 0px -6% 0px"
+    }
   );
 
   revealElements.forEach((el) => revealObserver.observe(el));
@@ -599,7 +592,7 @@ function initRevealOnScroll() {
 
   scrollAnimatedElements.forEach((el, index) => {
     el.classList.add("scroll-animate");
-    el.style.setProperty("--scroll-delay", `${(index % 8) * 55}ms`);
+    el.style.setProperty("--scroll-delay", mobileLite ? `${(index % 4) * 30}ms` : `${(index % 8) * 55}ms`);
   });
 
   const staggerObserver = new IntersectionObserver(
@@ -611,7 +604,10 @@ function initRevealOnScroll() {
         }
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    {
+      threshold: mobileLite ? 0.08 : 0.12,
+      rootMargin: mobileLite ? "0px 0px -2% 0px" : "0px 0px -8% 0px"
+    }
   );
 
   scrollAnimatedElements.forEach((el) => staggerObserver.observe(el));
@@ -754,37 +750,24 @@ function animateMetrics() {
   }
 
   const currentSkills = skillManager ? skillManager.getSkills() : skills;
-  const values = [activeProjects.length, currentSkills.length];
-  const targets = [projectCountEl, techCountEl];
+  const projectCount = Array.isArray(activeProjects) ? activeProjects.length : 0;
+  const techCount = Array.isArray(currentSkills) ? currentSkills.length : 0;
 
-  targets.forEach((target, idx) => {
-    let current = 0;
-    const total = values[idx];
-    const timer = setInterval(() => {
-      current += 1;
-      target.textContent = String(current);
-      if (current >= total) {
-        clearInterval(timer);
-      }
-    }, 95);
-  });
+  projectCountEl.textContent = String(projectCount);
+  techCountEl.textContent = String(techCount);
 }
 
 function updateTechCount() {
   const techCountEl = document.getElementById("tech-count");
   if (!techCountEl) return;
 
-  const currentSkills = skillManager ? skillManager.getSkills() : skills;
-  const count = currentSkills.length;
-  
-  // Update with smooth fade effect
-  techCountEl.style.opacity = "0.6";
-  setTimeout(() => {
-    techCountEl.textContent = String(count);
-    techCountEl.style.opacity = "1";
-  }, 150);
+  animateMetrics();
 
-  techCountEl.style.transition = "opacity 0.3s ease";
+  techCountEl.style.opacity = "0.72";
+  setTimeout(() => {
+    techCountEl.style.opacity = "1";
+  }, 120);
+  techCountEl.style.transition = "opacity 0.22s ease";
 }
 
 function initParticles() {
@@ -1013,7 +996,10 @@ async function initApp() {
   initTyping();
 
   if (skillManager && typeof skillManager.subscribe === "function") {
-    skillManager.subscribe(updateTechCount);
+    skillManager.subscribe(() => {
+      updateTechCount();
+      renderOrbitSystem();
+    });
   }
 
   renderOrbitSystem();
@@ -1026,6 +1012,13 @@ async function initApp() {
   validateContactForm();
   initScrollTop();
   animateMetrics();
+  setTimeout(animateMetrics, 800);
+  window.addEventListener("pageshow", animateMetrics, { passive: true });
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      animateMetrics();
+    }
+  });
   initParticles();
   initSpaceParallax();
   initModalEvents();

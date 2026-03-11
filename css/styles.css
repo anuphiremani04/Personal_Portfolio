@@ -76,6 +76,20 @@
     --surface-card-border: rgba(29, 63, 110, 0.28);
     --solar-opacity: 0.34;
   }
+
+  [data-theme="light"] .widget-label,
+  [data-theme="light"] .brand-text small,
+  [data-theme="light"] .typing-prefix {
+    color: #3b5a81;
+  }
+
+  [data-theme="light"] .widget-value,
+  [data-theme="light"] .brand-text strong,
+  [data-theme="light"] .brand span,
+  [data-theme="light"] .hero-right h1 {
+    color: #112742;
+    text-shadow: none;
+  }
 }
 
 * {
@@ -1807,6 +1821,10 @@ body,
 }
 
 @media (hover: none) and (pointer: coarse) {
+  :root {
+    --shadow-glow: 0 8px 18px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  }
+
   .solar-system-bg,
   .blob,
   #particles-canvas {
@@ -1821,11 +1839,30 @@ body,
     opacity: 0.32;
   }
 
+  .glass-card,
+  .glass-nav,
+  .mobile-menu,
+  .contact-panel,
+  .social-panel,
+  .project-face,
+  .hero-right,
+  .orbit-wrap {
+    backdrop-filter: none;
+  }
+
+  .ring-2,
+  .ring-3 {
+    animation: none;
+  }
+
+  .profile-node {
+    animation: floatNode 10s ease-in-out infinite;
+  }
+
   .reveal,
   .scroll-animate {
-    opacity: 1;
-    transform: none;
-    transition: none;
+    will-change: opacity, transform;
+    transition-duration: 0.4s;
   }
 
   .btn:hover,
@@ -1843,6 +1880,14 @@ body,
 
   .project-card:hover .project-inner {
     transform: none;
+  }
+
+  .project-inner,
+  .about-card,
+  .widget,
+  .social-link,
+  .orbit-chip {
+    transition-duration: 0.2s;
   }
 }
 
