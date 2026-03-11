@@ -9,10 +9,6 @@ The project is **lightweight, fast, and framework-free**, making it easy to cust
 
 # 🌐 Live Preview
 
-Add your deployed link here.
-
-Example:
-
 https://personal-portfolio-qea0.onrender.com/
 
 ---

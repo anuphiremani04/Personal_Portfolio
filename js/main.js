@@ -151,6 +151,8 @@ function initThemeToggle() {
   });
 }
 
+const PORTFOLIO_DEPLOYED_URL = "https://personal-portfolio-qea0.onrender.com/";
+
 async function loadProjectsFromGithub() {
   if (!projectSyncConfig?.includeGithubRepos || !projectSyncConfig?.githubUsername) {
     return;
@@ -184,6 +186,7 @@ async function loadProjectsFromGithub() {
       .filter((repo) => !excluded.has(String(repo.name || "").trim().toLowerCase()))
       .filter((repo) => !localByGithub.has(String(repo.html_url || "").trim().toLowerCase()))
       .map((repo) => {
+        const repoName = String(repo.name || "").trim().toLowerCase();
         const tech = [];
         if (repo.language) {
           tech.push(repo.language);
@@ -200,12 +203,16 @@ async function loadProjectsFromGithub() {
           tech.push("Repository");
         }
 
+        const liveUrl = repoName === "personal_portfolio"
+          ? PORTFOLIO_DEPLOYED_URL
+          : (repo.homepage ? repo.homepage : repo.html_url);
+
         return {
           title: normalizeRepoName(repo.name || "Untitled Project"),
           description: repo.description || "GitHub project synced automatically from repository data.",
           tech,
           github: repo.html_url,
-          live: repo.homepage ? repo.homepage : repo.html_url
+          live: liveUrl
         };
       });
 
