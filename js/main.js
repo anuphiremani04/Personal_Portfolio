@@ -781,12 +781,53 @@ function initEmailLinkMode() {
   }
 
   const to = "anuphiremani123@gmail.com";
+  const emailLabel = emailSocialLink.querySelector("span:last-child");
   const gmailDirect = `https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=${encodeURIComponent(to)}`;
-  emailSocialLink.setAttribute("href", gmailDirect);
-  emailSocialLink.setAttribute("target", "_blank");
-  emailSocialLink.setAttribute("rel", "noreferrer noopener");
+
+  function applyEmailLinkBehavior() {
+    if (isMobilePerformanceMode()) {
+      emailSocialLink.setAttribute("href", "#");
+      emailSocialLink.removeAttribute("target");
+      emailSocialLink.removeAttribute("rel");
+      emailSocialLink.setAttribute("aria-label", `Email address: ${to}`);
+      if (emailLabel) {
+        emailLabel.textContent = to;
+      }
+      return;
+    }
+
+    emailSocialLink.setAttribute("href", gmailDirect);
+    emailSocialLink.setAttribute("target", "_blank");
+    emailSocialLink.setAttribute("rel", "noreferrer noopener");
+    emailSocialLink.setAttribute("aria-label", "Email");
+    if (emailLabel) {
+      emailLabel.textContent = "Email";
+    }
+  }
+
+  applyEmailLinkBehavior();
+
+  let resizeFrame = 0;
+  function onViewportChange() {
+    if (resizeFrame) {
+      cancelAnimationFrame(resizeFrame);
+    }
+    resizeFrame = requestAnimationFrame(() => {
+      resizeFrame = 0;
+      applyEmailLinkBehavior();
+    });
+  }
+
+  window.addEventListener("resize", onViewportChange, { passive: true });
+  window.addEventListener("orientationchange", onViewportChange, { passive: true });
 
   emailSocialLink.addEventListener("click", (event) => {
+    if (isMobilePerformanceMode()) {
+      event.preventDefault();
+      showNotice(`Email: ${to}`, "success");
+      return;
+    }
+
     event.preventDefault();
     const opened = openGmailCompose({ to });
     if (!opened) {
