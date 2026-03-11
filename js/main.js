@@ -719,16 +719,59 @@ function validateContactForm() {
       return;
     }
 
-    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=anuphiremani123@gmail.com&su=${subject}&body=${body}`;
-
-    const tab = window.open(gmailCompose, "_blank", "noopener,noreferrer");
-    if (!tab) {
-      window.location.href = gmailCompose;
+    const subject = `Portfolio Contact from ${name}`;
+    const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+    const opened = openGmailCompose({
+      to: "anuphiremani123@gmail.com",
+      subject,
+      body
+    });
+    if (opened) {
+      showNotice("Gmail compose opened with your message details.", "success");
+      return;
     }
-    showNotice("Gmail compose opened with your message details.", "success");
+
+    showNotice("Popup blocked. Please allow popups and try again.", "error");
   });
+}
+
+function openGmailCompose({ to, subject = "", body = "" }) {
+  const encodedTo = encodeURIComponent(to);
+  const encodedSubject = encodeURIComponent(subject);
+  const encodedBody = encodeURIComponent(body);
+
+  const gmailWebCompose = `https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=${encodedTo}&su=${encodedSubject}&body=${encodedBody}`;
+  const composeTab = window.open("about:blank", "_blank");
+  if (!composeTab) {
+    return false;
+  }
+
+  try {
+    composeTab.opener = null;
+  } catch {
+    // noop
+  }
+
+  if (!isMobilePerformanceMode()) {
+    composeTab.location.href = gmailWebCompose;
+    return true;
+  }
+
+  // On mobile, try Gmail app deep-link in new tab, then fallback in that same tab.
+  const gmailAppCompose = `googlegmail://co?to=${encodedTo}&subject=${encodedSubject}&body=${encodedBody}`;
+  composeTab.location.href = gmailAppCompose;
+
+  window.setTimeout(() => {
+    try {
+      if (!composeTab.closed) {
+        composeTab.location.href = gmailWebCompose;
+      }
+    } catch {
+      // noop
+    }
+  }, 700);
+
+  return true;
 }
 
 function initEmailLinkMode() {
@@ -737,10 +780,19 @@ function initEmailLinkMode() {
     return;
   }
 
-  const gmailDirect = "https://mail.google.com/mail/?view=cm&fs=1&to=anuphiremani123@gmail.com";
+  const to = "anuphiremani123@gmail.com";
+  const gmailDirect = `https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=${encodeURIComponent(to)}`;
   emailSocialLink.setAttribute("href", gmailDirect);
   emailSocialLink.setAttribute("target", "_blank");
   emailSocialLink.setAttribute("rel", "noreferrer noopener");
+
+  emailSocialLink.addEventListener("click", (event) => {
+    event.preventDefault();
+    const opened = openGmailCompose({ to });
+    if (!opened) {
+      showNotice("Popup blocked. Please allow popups and try again.", "error");
+    }
+  });
 }
 
 function showNotice(message, type) {
