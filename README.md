@@ -13,7 +13,7 @@ Add your deployed link here.
 
 Example:
 
-https://your-portfolio-link.com
+https://personal-portfolio-qea0.onrender.com/
 
 ---
 
