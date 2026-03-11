@@ -723,9 +723,24 @@ function validateContactForm() {
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
     const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=anuphiremani123@gmail.com&su=${subject}&body=${body}`;
 
-    window.open(gmailCompose, "_blank", "noopener,noreferrer");
-    showNotice("Gmail compose opened. Please click Send to deliver your message from your account.", "success");
+    const tab = window.open(gmailCompose, "_blank", "noopener,noreferrer");
+    if (!tab) {
+      window.location.href = gmailCompose;
+    }
+    showNotice("Gmail compose opened with your message details.", "success");
   });
+}
+
+function initEmailLinkMode() {
+  const emailSocialLink = document.getElementById("email-social-link");
+  if (!emailSocialLink) {
+    return;
+  }
+
+  const gmailDirect = "https://mail.google.com/mail/?view=cm&fs=1&to=anuphiremani123@gmail.com";
+  emailSocialLink.setAttribute("href", gmailDirect);
+  emailSocialLink.setAttribute("target", "_blank");
+  emailSocialLink.setAttribute("rel", "noreferrer noopener");
 }
 
 function showNotice(message, type) {
@@ -1009,6 +1024,7 @@ async function initApp() {
   initRevealOnScroll();
   initNavbar();
   initHamburger();
+  initEmailLinkMode();
   validateContactForm();
   initScrollTop();
   animateMetrics();
