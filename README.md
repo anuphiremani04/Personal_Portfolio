@@ -88,7 +88,7 @@ Includes:
 ---
 
 # 📁 Project Structure
-''
+```
 AIH-Portfolio/
 │
 ├── assets/ # Images, icons, project graphics
@@ -107,4 +107,4 @@ AIH-Portfolio/
 ├── index.html # Main portfolio page
 │
 └── README.md # Project documentation
-''
+```
