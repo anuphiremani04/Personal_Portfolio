@@ -1,4 +1,67 @@
-﻿:root {
+﻿/* ---- Enhanced Footer Glass ---- */
+
+.footer-copyright {
+  text-align: center;
+  margin: 0;
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  font-size: 1.08em;
+  color: var(--text-soft, #bfc6e6);
+  letter-spacing: 0.02em;
+  user-select: none;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.18);
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .footer-glass {
+    padding: 0.8em 0.5em 0.6em 0.5em;
+    max-width: 98vw;
+    border-radius: 12px;
+  }
+  .footer-copyright {
+    font-size: 0.98em;
+  }
+}
+/* ---- Main Footer ---- */
+.main-footer {
+  width: 100%;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  margin-top: 0;
+  padding: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.main-footer .container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+#copyright-text {
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  font-size: 1.08em;
+  color: #bfc6e6;
+  letter-spacing: 0.02em;
+  text-align: center;
+  margin: 1.5em 0 0.7em 0;
+  padding: 0;
+  user-select: none;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.18);
+}
+
+@media (max-width: 600px) {
+  .main-footer .container {
+    padding: 0 8px;
+  }
+  #copyright-text {
+    font-size: 0.98em;
+    margin: 1.2em 0 0.6em 0;
+  }
+}
+:root {
   --space-blue: #0a0a0a;
   --midnight-purple: #161616;
   --black-hole: #000000;

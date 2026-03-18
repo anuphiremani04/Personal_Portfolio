@@ -318,8 +318,22 @@
               </svg>
             </span>
             <span>Email</span>
+
           </a>
         </div>
+        <!-- Footer inside Connect With Me -->
+        <footer class="main-footer" style="margin-top:2.2em;">
+          <div class="container">
+            <hr style="border: none; border-top: 1.5px solid rgba(255,255,255,0.08); margin: 2.2em 0 0.7em 0;" />
+            <p id="copyright-text-connect" class="footer-copyright" style="margin-bottom:1.2em;">
+              &copy; <span id="footer-year-connect"></span> Anup I Hiremani. All rights reserved.
+            </p>
+          </div>
+          <script>
+            // Set dynamic year for copyright in Connect With Me
+            document.getElementById('footer-year-connect').textContent = new Date().getFullYear();
+          </script>
+        </footer>
       </div>
     </div>
   </footer>
@@ -336,7 +350,6 @@
       <div class="modal-tags" id="modal-tags"></div>
       <div class="modal-actions">
         <a id="modal-github" class="btn btn-secondary" href="#" target="_blank" rel="noreferrer noopener">GitHub</a>
-        <a id="modal-live" class="btn btn-primary" href="#" target="_blank" rel="noreferrer noopener">Live Demo</a>
       </div>
     </article>
   </div>

@@ -471,7 +471,8 @@ function renderProjects() {
 }
 
 function openModal(project, projectIndex = 0) {
-  if (!modal || !modalTitle || !modalDescription || !modalImage || !modalTags || !modalGithub || !modalLive) {
+
+  if (!modal || !modalTitle || !modalDescription || !modalImage || !modalTags || !modalGithub) {
     return;
   }
 
@@ -487,7 +488,10 @@ function openModal(project, projectIndex = 0) {
   modalTags.innerHTML = tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
 
   modalGithub.href = sanitizeUrl(project.github);
-  modalLive.href = sanitizeUrl(project.live);
+  // Hide the Live Demo button if it exists
+  if (modalLive) {
+    modalLive.style.display = "none";
+  }
 
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
