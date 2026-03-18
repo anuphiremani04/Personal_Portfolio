@@ -1,4 +1,83 @@
-﻿/* ---- Enhanced Footer Glass ---- */
+﻿/* Profile Name Circle Below Image */
+.profile-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.profile-name-text {
+  margin-top: 1.1rem;
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+/* Profile Name Circle Below Image */
+.profile-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* View More Projects Button Styles */
+
+.view-more-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2.5rem;
+  margin-bottom: 0.5rem;
+  clear: both;
+}
+
+.projects-grid + .view-more-wrap {
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 700px) {
+  .view-more-wrap {
+    margin-top: 1.2rem;
+    margin-bottom: 0.2rem;
+  }
+}
+
+.view-more-btn {
+  padding: 0.75rem 2.1rem;
+  font-size: 1.08rem;
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  border: 1px solid var(--glass-border);
+  border-radius: 2rem;
+  background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+  color: var(--text-main);
+  box-shadow: var(--shadow-glow);
+  backdrop-filter: blur(14px);
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 12px rgba(255,255,255,0.18);
+  transition: background 0.22s, box-shadow 0.22s, transform 0.22s, color 0.22s;
+}
+
+.view-more-btn:hover, .view-more-btn:focus {
+  background: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.08));
+  color: var(--theme-hover-text);
+  box-shadow: 0 4px 18px rgba(122,140,255,0.22), 0 0 40px rgba(255,255,255,0.18);
+  transform: translateY(-2px) scale(1.04);
+}
+}
+
+.view-more-btn:hover, .view-more-btn:focus {
+  background: linear-gradient(90deg, #a6b8ff 0%, #7a8cff 100%);
+  box-shadow: 0 4px 18px rgba(122,140,255,0.22);
+  transform: translateY(-2px) scale(1.04);
+}
+/* ---- Enhanced Footer Glass ---- */
 
 .footer-copyright {
   text-align: center;
@@ -716,6 +795,23 @@ a {
   filter: var(--theme-profile-filter);
 }
 
+[data-theme="dark"] .profile-core img {
+  filter: none !important;
+}
+  transition: filter 0.3s;
+}
+
+@media (max-width: 900px) {
+  .profile-core img {
+    filter: none !important;
+  }
+}
+
+[data-theme="dark"] .profile-node:hover .profile-core img {
+  filter: none !important;
+}
+}
+
 .ring {
   position: absolute;
   border-radius: 50%;
@@ -1139,6 +1235,15 @@ a[aria-disabled="true"] {
 }
 
 .project-front img {
+  /* Fix alignment for HTML thumbnails */
+  .project-thumb {
+    width: 100%;
+    height: 52%;
+    aspect-ratio: 16/9;
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+  }
   width: 100%;
   height: 52%;
   object-fit: cover;
@@ -1381,58 +1486,7 @@ a[aria-disabled="true"] {
   margin-top: 12px;
 }
 
-.theme-toggle {
-  width: 44px;
-  height: 44px;
-  margin-left: 0;
-  border: 1px solid var(--theme-line-strong);
-  border-radius: 999px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06));
-  color: var(--text-main);
-  display: inline-grid;
-  place-items: center;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.35s ease, border-color 0.35s ease;
-}
 
-.theme-icon {
-  position: absolute;
-  line-height: 1;
-  font-size: 1.05rem;
-  transition: opacity 0.28s ease, transform 0.28s ease;
-}
-
-.theme-icon-sun {
-  opacity: 0;
-  transform: translateY(6px) scale(0.75);
-}
-
-.theme-icon-moon {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-[data-theme="light"] .theme-icon-sun {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-[data-theme="light"] .theme-icon-moon {
-  opacity: 0;
-  transform: translateY(-6px) scale(0.75);
-}
-
-.theme-toggle:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
-}
-
-.theme-toggle:focus-visible {
-  outline: 2px solid var(--neon-cyan);
-  outline-offset: 2px;
-}
 
 body,
 .glass-card,
@@ -1708,10 +1762,7 @@ body,
     padding: 4px 8px;
   }
 
-  .theme-toggle {
-    width: 40px;
-    height: 40px;
-  }
+
 }
 
 @media (max-width: 768px) {

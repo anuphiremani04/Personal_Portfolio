@@ -404,32 +404,55 @@ function renderProjects() {
     return;
   }
 
-  projectsGrid.innerHTML = activeProjects
-    .map(
-      (project, idx) => {
-        const projectImage = sanitizeUrl(project.image || getProjectImage(idx), getProjectImage(idx));
-        const safeTitle = escapeHtml(project.title || "Untitled Project");
-        const safeAlt = escapeHtml(`${project.title || "Project"} preview`);
-        const safeTech = Array.isArray(project.tech)
-          ? project.tech.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")
-          : "";
 
-        return `
-      <article class="project-card" data-index="${idx}">
-        <div class="project-inner glass-card">
-          <div class="project-face project-front">
-            <img src="${projectImage}" alt="${safeAlt}" />
-            <h3>${safeTitle}</h3>
-            <div class="project-tags">
-              ${safeTech}
+  const maxProjects = 5;
+  const projectCards = activeProjects.slice(0, maxProjects)
+    .map((project, idx) => {
+      const projectImage = project.image || getProjectImage(idx);
+      const safeTitle = escapeHtml(project.title || "Untitled Project");
+      const safeAlt = escapeHtml(`${project.title || "Project"} preview`);
+      const safeTech = Array.isArray(project.tech)
+        ? project.tech.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")
+        : "";
+
+      let thumbContent = "";
+      if (projectImage.endsWith('.html')) {
+        // Fetch and insert thumbnail HTML
+        thumbContent = `<div class='project-thumb' data-thumb-html='${projectImage}'></div>`;
+      } else {
+        thumbContent = `<img src="${sanitizeUrl(projectImage, getProjectImage(idx))}" alt="${safeAlt}" />`;
+      }
+
+      return `
+        <article class="project-card" data-index="${idx}">
+          <div class="project-inner glass-card">
+            <div class="project-face project-front">
+              ${thumbContent}
+              <h3>${safeTitle}</h3>
+              <div class="project-tags">
+                ${safeTech}
+              </div>
             </div>
           </div>
-        </div>
-      </article>
-    `;
-      }
-    )
+        </article>
+      `;
+    })
     .join("");
+
+  const viewMoreBtn = `<div class="view-more-wrap"><button class="view-more-btn" id="view-more-projects">View More</button></div>`;
+  projectsGrid.innerHTML = projectCards + viewMoreBtn;
+
+  // Load thumbnail HTML for project cards
+  document.querySelectorAll('.project-thumb[data-thumb-html]').forEach(async (el) => {
+    const htmlPath = el.getAttribute('data-thumb-html');
+    try {
+      const response = await fetch(htmlPath);
+      if (response.ok) {
+        const html = await response.text();
+        el.innerHTML = html;
+      }
+    } catch {}
+  });
 
   document.querySelectorAll(".project-card").forEach((card) => {
     const inner = card.querySelector(".project-inner");
@@ -468,6 +491,13 @@ function renderProjects() {
       openModal(project, projectIndex);
     });
   });
+
+  const viewMoreProjectsBtn = document.getElementById("view-more-projects");
+  if (viewMoreProjectsBtn) {
+    viewMoreProjectsBtn.addEventListener("click", () => {
+      window.open("https://github.com/anuphiremani04?tab=repositories", "_blank");
+    });
+  }
 }
 
 function openModal(project, projectIndex = 0) {
