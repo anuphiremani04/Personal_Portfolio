@@ -203,7 +203,7 @@
   --theme-backdrop: rgba(22, 38, 66, 0.34);
   --theme-image-filter: grayscale(0.15) saturate(0.72) contrast(1.02) brightness(0.94);
   --theme-profile-filter: grayscale(0.12) saturate(0.7) contrast(1.02) brightness(0.96);
-  --solar-opacity: 0.92;
+  --solar-opacity: 0.8;
 }
 
 @media (max-width: 900px) {
@@ -216,7 +216,7 @@
     --surface-nav-border: rgba(29, 63, 110, 0.22);
     --surface-card: rgba(255, 255, 255, 0.88);
     --surface-card-border: rgba(29, 63, 110, 0.28);
-    --solar-opacity: 0.92;
+    --solar-opacity: 0.34;
   }
 
   [data-theme="light"] .widget-label,
@@ -298,7 +298,7 @@ a {
   position: fixed;
   inset: 0;
   pointer-events: none;
-    z-index: 0;
+  z-index: -3;
   overflow: hidden;
   opacity: var(--solar-opacity);
 }
@@ -496,7 +496,7 @@ a {
   opacity: 0.45;
 }
 
-  z-index: -1;
+.blob-1 {
   background: radial-gradient(circle, rgba(255, 255, 255, 0.42), transparent 62%);
   transform: translate(-25%, -30%);
   animation: floatBlob1 15s ease-in-out infinite;

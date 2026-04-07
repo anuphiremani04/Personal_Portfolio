@@ -17,11 +17,11 @@ const modalTitle = document.getElementById("modal-title");
 const modalDescription = document.getElementById("modal-description");
 const modalImage = document.getElementById("modal-image");
 const modalTags = document.getElementById("modal-tags");
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion) {
-    solar.style.transform = "translate(-50%, -50%)";
-    return;
-  }
+const modalGithub = document.getElementById("modal-github");
+const modalLive = document.getElementById("modal-live");
+const themeToggle = document.getElementById("theme-toggle");
+const PROJECT_IMAGE_COUNT = 20;
+let releaseProjectModalTrap = null;
 
 function isMobilePerformanceMode() {
   return window.matchMedia("(max-width: 900px), (hover: none) and (pointer: coarse)").matches;
@@ -925,11 +925,11 @@ function initParticles() {
     return;
   }
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) {
-      canvas.style.display = "none";
-      return;
-    }
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion || isMobilePerformanceMode()) {
+    canvas.style.display = "none";
+    return;
+  }
 
   const ctx = canvas.getContext("2d");
   if (!ctx) {
