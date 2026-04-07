@@ -38,8 +38,13 @@
       }
 
       const storedTheme = localStorage.getItem("portfolio-theme");
-      const preferredTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-      const initialTheme = storedTheme || preferredTheme;
+      let initialTheme;
+      if (isMobileViewport) {
+        initialTheme = "dark";
+      } else {
+        const preferredTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        initialTheme = storedTheme || preferredTheme;
+      }
       document.documentElement.setAttribute("data-theme", initialTheme);
       document.documentElement.style.colorScheme = initialTheme;
     })();
