@@ -216,7 +216,7 @@
     --surface-nav-border: rgba(29, 63, 110, 0.22);
     --surface-card: rgba(255, 255, 255, 0.88);
     --surface-card-border: rgba(29, 63, 110, 0.28);
-    --solar-opacity: 0.92;
+    --solar-opacity: 0.34;
   }
 
   [data-theme="light"] .widget-label,
@@ -1960,6 +1960,24 @@ body,
   }
 }
 
+@media (hover: none) and (pointer: coarse) {
+  :root {
+    --shadow-glow: 0 8px 18px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  }
+
+  .solar-system-bg,
+  .blob,
+  #particles-canvas {
+    display: none;
+  }
+
+  .bg-gradient {
+    opacity: 0.42;
+  }
+
+  [data-theme="light"] .bg-gradient {
+    opacity: 0.32;
+  }
 
   .glass-card,
   .glass-nav,
