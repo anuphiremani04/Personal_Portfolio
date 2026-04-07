@@ -203,7 +203,7 @@
   --theme-backdrop: rgba(22, 38, 66, 0.34);
   --theme-image-filter: grayscale(0.15) saturate(0.72) contrast(1.02) brightness(0.94);
   --theme-profile-filter: grayscale(0.12) saturate(0.7) contrast(1.02) brightness(0.96);
-  --solar-opacity: 0.8;
+  --solar-opacity: 0.92;
 }
 
 @media (max-width: 900px) {
