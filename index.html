@@ -41,6 +41,7 @@
       let initialTheme;
       if (isMobileViewport) {
         initialTheme = "dark";
+        localStorage.setItem("portfolio-theme", "dark");
       } else {
         const preferredTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
         initialTheme = storedTheme || preferredTheme;
