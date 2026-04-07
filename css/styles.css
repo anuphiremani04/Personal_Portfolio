@@ -1743,7 +1743,42 @@ body,
     grid-template-columns: 1fr;
     min-height: auto;
   }
+  
+  /* Skill Universe Mobile Improvements */
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    margin-top: 22px;
+  }
 
+  .skill-tile {
+    padding: 22px 10px;
+    border-radius: 18px;
+    font-size: 1.12rem;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.22);
+    background: linear-gradient(160deg, rgba(30,30,30,0.22), rgba(20,20,20,0.08));
+    transition: transform 0.22s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.22s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform, box-shadow;
+  }
+
+  .skill-tile:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+
+  .skill-icon {
+    font-size: 2.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  .skill-tile h4 {
+    font-size: 1.08rem;
+    text-align: center;
+    margin: 0;
+  }
   .hero-left {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
