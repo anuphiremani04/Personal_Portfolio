@@ -1837,6 +1837,28 @@ body,
     gap: 8px;
   }
 
+  /* Ensure solar system is always visible and responsive on mobile */
+  .solar-system-bg {
+    display: block !important;
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    overflow: hidden;
+    opacity: var(--solar-opacity);
+  }
+
+  .solar-parallax {
+    display: block !important;
+    width: min(150vw, 420px);
+    left: 50%;
+    top: 38%;
+    transform: translate(-50%, -50%) translate3d(var(--solar-mx), calc(var(--solar-my) + var(--solar-sy)), 0);
+  }
+
+  .solar-stars {
+    opacity: 0.28;
+  }
+
   .brand-mark {
     width: 28px;
     height: 28px;
