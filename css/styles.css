@@ -1893,15 +1893,11 @@ body,
   }
 
   .orbit-wrap {
-    display: none;
+    display: block !important;
   }
 
   .orbit-carousel {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 16px;
-    scroll-snap-type: x mandatory;
+    display: none !important;
   }
 
   .orbit-chip {
