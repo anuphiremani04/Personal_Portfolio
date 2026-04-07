@@ -45,50 +45,6 @@
     margin-top: 1.2rem;
     margin-bottom: 0.2rem;
   }
-
-  /* Smooth, buttery navbar for mobile */
-  .glass-nav-wrap {
-    top: 8px;
-    transition: top 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1), backdrop-filter 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.32), 0 0 18px rgba(255,255,255,0.08);
-    backdrop-filter: blur(18px);
-    will-change: top, box-shadow, backdrop-filter;
-  }
-
-  .glass-nav {
-    min-height: 62px;
-    border-radius: 18px;
-    padding: 10px 12px;
-    transition: min-height 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1), backdrop-filter 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.22), 0 0 10px rgba(255,255,255,0.06);
-    backdrop-filter: blur(18px);
-    will-change: min-height, box-shadow, backdrop-filter;
-  }
-
-  .mobile-menu {
-    animation: menuSlideFadeIn 0.38s cubic-bezier(0.23, 1, 0.32, 1);
-    opacity: 1;
-    transform: translateY(0);
-    will-change: opacity, transform;
-  }
-
-  .mobile-menu:not(.open) {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-18px);
-    transition: opacity 0.32s, transform 0.32s;
-  }
-
-  @keyframes menuSlideFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-18px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 }
 
 .view-more-btn {
@@ -986,11 +942,7 @@ a[aria-disabled="true"] {
 .orbit-wrap {
   padding: 24px;
   min-height: 540px;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04));
-  }
-  
+  position: relative;
   overflow: hidden;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04));
 }
@@ -1023,22 +975,17 @@ a[aria-disabled="true"] {
 
 .orbit-scene {
   position: relative;
-    width: min(760px, 100%);
-    height: 240px;
-    width: 100%;
-    max-width: 98vw;
-  }
+  width: min(760px, 100%);
+  height: 500px;
   margin: 0 auto;
 }
 
 .orbit-ring-main {
   position: absolute;
   left: 50%;
-    top: 50%;
-    width: 180px;
-    height: 180px;
-    border-width: 1.5px;
-  }
+  top: 50%;
+  width: 404px;
+  height: 404px;
   border-radius: 50%;
   transform: translate(-50%, -50%);
   border: 2px solid rgba(255, 255, 255, 0.44);
@@ -1090,13 +1037,8 @@ a[aria-disabled="true"] {
 .orbit-node-label {
   position: absolute;
   left: 50%;
-    top: 0;
-    font-size: 0.68rem;
-    padding: 3px 7px;
-    max-width: 90px;
-    white-space: normal;
-    text-align: center;
-  }
+  top: 0;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #ffffff;
   border-radius: 999px;
@@ -1757,42 +1699,7 @@ body,
     grid-template-columns: 1fr;
     min-height: auto;
   }
-  
-  /* Skill Universe Mobile Improvements */
-  .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 22px;
-    margin-top: 22px;
-  }
 
-  .skill-tile {
-    padding: 22px 10px;
-    border-radius: 18px;
-    font-size: 1.12rem;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.22);
-    background: linear-gradient(160deg, rgba(30,30,30,0.22), rgba(20,20,20,0.08));
-    transition: transform 0.22s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.22s cubic-bezier(0.23, 1, 0.32, 1);
-    will-change: transform, box-shadow;
-  }
-
-  .skill-tile:active {
-    transform: scale(0.97);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-  }
-
-  .skill-icon {
-    font-size: 2.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 8px;
-  }
-
-  .skill-tile h4 {
-    font-size: 1.08rem;
-    text-align: center;
-    margin: 0;
-  }
   .hero-left {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1893,11 +1800,15 @@ body,
   }
 
   .orbit-wrap {
-    display: block !important;
+    display: none;
   }
 
   .orbit-carousel {
-    display: none !important;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 16px;
+    scroll-snap-type: x mandatory;
   }
 
   .orbit-chip {
@@ -1924,28 +1835,6 @@ body,
 @media (max-width: 480px) {
   .brand {
     gap: 8px;
-  }
-
-  /* Ensure solar system is always visible and responsive on mobile */
-  .solar-system-bg {
-    display: block !important;
-    position: fixed;
-    inset: 0;
-    z-index: -3;
-    overflow: hidden;
-    opacity: var(--solar-opacity);
-  }
-
-  .solar-parallax {
-    display: block !important;
-    width: min(150vw, 420px);
-    left: 50%;
-    top: 38%;
-    transform: translate(-50%, -50%) translate3d(var(--solar-mx), calc(var(--solar-my) + var(--solar-sy)), 0);
-  }
-
-  .solar-stars {
-    opacity: 0.28;
   }
 
   .brand-mark {
