@@ -216,7 +216,7 @@
     --surface-nav-border: rgba(29, 63, 110, 0.22);
     --surface-card: rgba(255, 255, 255, 0.88);
     --surface-card-border: rgba(29, 63, 110, 0.28);
-    --solar-opacity: 0.34;
+    --solar-opacity: 0.92;
   }
 
   [data-theme="light"] .widget-label,
