@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anup Hiremani — Initiating Cosmic Link</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 420'%3E%3Cpath d='M90 295 L175 85 L260 295 M115 230 L240 230' fill='none' stroke='white' stroke-width='30' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M210 80 L210 300' fill='none' stroke='white' stroke-width='30' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: #050508;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    /* Cinematic Space Background Enchantment */
+    .space-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(circle at 50% 50%, #0a0a1a 0%, #050508 100%);
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 100px 150px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1.2px 1.2px at 200px 300px, #fff, rgba(0,0,0,0));
+      background-size: 350px 350px;
+      opacity: 0.15;
+      animation: spaceMove 100s linear infinite;
+    }
+
+    @keyframes spaceMove {
+      from { transform: translateY(0); }
+      to { transform: translateY(-350px); }
+    }
+
+    .nebula-glow {
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.03), transparent 70%);
+      filter: blur(100px);
+      z-index: -1;
+    }
+
+    .falling-star {
+      position: absolute;
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, #fff, transparent);
+      opacity: 0;
+      z-index: -1;
+      animation: fall 0.6s cubic-bezier(0.4, 0, 1, 1) infinite;
+    }
+
+    .falling-star::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 3px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #fff, 0 0 20px #fff;
+    }
+
+    @keyframes fall {
+      0% { transform: translate(0, -100px) rotate(-45deg) scaleY(0); opacity: 0; }
+      10% { opacity: 1; transform: translate(100px, 0) rotate(-45deg) scaleY(1.2); }
+      30% { transform: translate(120vw, 120vh) rotate(-45deg) scaleY(1); opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    .logo-container {
+      position: relative;
+      width: 360px;
+      height: 420px;
+      filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.08));
+      animation: containerFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes containerFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .logo-svg { width: 100%; height: 100%; }
+
+    @keyframes letterFadeIn {
+      0% { opacity: 0; letter-spacing: 0.6em; filter: blur(10px); }
+      100% { opacity: 1; letter-spacing: 0.35em; filter: blur(0); }
+    }
+    @keyframes logoShimmer {
+      0%, 100% { filter: brightness(0.8) contrast(1.1) drop-shadow(0 0 5px rgba(255,255,255,0.05)); }
+      50% { filter: brightness(1.2) contrast(1) drop-shadow(0 0 20px rgba(255, 255, 255, 0.2)); }
+    }
+    @keyframes ringFadeIn {
+      0% { opacity: 0; stroke-dashoffset: 900; }
+      100% { opacity: 0.6; stroke-dashoffset: 0; }
+    }
+    @keyframes monogramDraw {
+      0% { stroke-dashoffset: 2000; opacity: 0; }
+      100% { stroke-dashoffset: 0; opacity: 1; }
+    }
+    @keyframes underlineExpand {
+      0% { stroke-dashoffset: 200; opacity: 0; }
+      100% { stroke-dashoffset: 0; opacity: 0.6; }
+    }
+    @keyframes starGlow {
+      0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+      50% { opacity: 0.3; transform: scale(0.6) rotate(45deg); }
+    }
+
+    .monogram-group { animation: logoShimmer 5s ease-in-out infinite; }
+
+    .ring-ellipse {
+      fill: none;
+      stroke: #aaa;
+      stroke-width: 1.5;
+      animation: ringFadeIn 2.5s ease-out forwards;
+      stroke-dasharray: 900;
+      stroke-dashoffset: 900;
+      opacity: 0.3;
+    }
+    .ring-outer {
+      fill: none;
+      stroke: #555;
+      stroke-width: 0.8;
+      animation: ringFadeIn 3s ease-out 0.3s forwards;
+      stroke-dasharray: 950;
+      stroke-dashoffset: 950;
+      opacity: 0.2;
+    }
+
+    .name-text {
+      animation: letterFadeIn 2.5s cubic-bezier(0.19, 1, 0.22, 1) 2s both;
+      fill: #fff;
+      font-size: 16px;
+      letter-spacing: 0.35em;
+      text-anchor: middle;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    .star-ray {
+      animation: starGlow 3s ease-in-out infinite;
+      transform-origin: 263px 118px;
+    }
+
+    .underline-line {
+      stroke: #ffffff;
+      stroke-width: 1.2;
+      animation: underlineExpand 2s ease-out 3s both;
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      filter: drop-shadow(0 0 5px #ffffff);
+      opacity: 0.5;
+    }
+
+    .monogram-path {
+      fill: none;
+      stroke: url(#silverGrad);
+      stroke-width: 14;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      animation: monogramDraw 3s cubic-bezier(0.77, 0, 0.175, 1) 0.5s both;
+    }
+
+    #skipBtn {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.5);
+      padding: 8px 24px;
+      border-radius: 99px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.4s ease;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+    }
+    #skipBtn:hover {
+      border-color: #ffffff;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .side-elements {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .side-panel {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 120px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0.4;
+      animation: sideReveal 3s ease-out both;
+    }
+
+    @keyframes sideReveal {
+      from { opacity: 0; transform: translateY(-50%) scaleX(0); }
+      to { opacity: 0.4; transform: translateY(-50%) scaleX(1); }
+    }
+
+    .side-panel.left { left: 40px; }
+    .side-panel.right { right: 40px; }
+
+    .ui-bracket {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #fff;
+    }
+
+    .left .ui-bracket { border-right: none; border-bottom: none; }
+    .right .ui-bracket { border-left: none; border-bottom: none; transform: scaleX(-1); }
+    
+    .ui-bracket.bottom { transform: scaleY(-1); }
+    .right .ui-bracket.bottom { transform: scale(-1); }
+
+    .data-stream {
+      flex: 1;
+      margin: 20px 0;
+      border-left: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .right .data-stream { border-left: none; border-right: 1px solid rgba(255,255,255,0.1); }
+
+    .data-bit {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, #fff, transparent);
+      animation: streamMove 4s linear infinite;
+    }
+
+    .right .data-bit { background: linear-gradient(to left, #fff, transparent); right: 0; left: auto; }
+
+    @keyframes streamMove {
+      0% { top: -10%; opacity: 0; }
+      50% { opacity: 1; }
+      100% { top: 110%; opacity: 0; }
+    }
+
+    .side-info {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 8px;
+      letter-spacing: 2px;
+      color: #888;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .scanning-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+      animation: scanMove 8s linear infinite;
+    }
+
+    @keyframes scanMove {
+      0% { transform: translateY(-100vh); }
+      100% { transform: translateY(100vh); }
+    }
+
+    .hex-grid {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='104' viewBox='0 0 60 104' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 104V102.5C60 101.5 59.5 100.5 58.5 100L31.5 84.5C30.5 84 29.5 84 28.5 84.5L1.5 100C0.5 100.5 0 101.5 0 102.5V104M60 0V1.5C60 2.5 59.5 3.5 58.5 4L31.5 19.5C30.5 20 29.5 20 28.5 19.5L1.5 4C0.5 3.5 0 2.5 0 1.5V0M0 50.5C0 49.5 0.5 48.5 1.5 48L28.5 32.5C29.5 32 30.5 32 31.5 32.5L58.5 48C59.5 48.5 60 49.5 60 50.5V53.5C60 54.5 59.5 55.5 58.5 56L31.5 71.5C30.5 72 29.5 72 28.5 71.5L1.5 56C0.5 55.5 0 54.5 0 53.5V50.5Z' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1'/%3E%3C/svg%3E");
+      opacity: 0.5;
+      z-index: -1;
+      animation: hexPulse 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes hexPulse {
+      0% { opacity: 0.3; transform: scale(1); }
+      100% { opacity: 0.6; transform: scale(1.05); }
+    }
+
+    .corner-widget {
+      position: fixed;
+      width: 50px;
+      height: 50px;
+      z-index: 100;
+      opacity: 0.3;
+    }
+
+    .corner-widget::before {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: 2px solid #fff;
+      animation: cornerBlink 2s infinite;
+    }
+
+    @keyframes cornerBlink {
+      0%, 100% { opacity: 1; filter: drop-shadow(0 0 5px #fff); }
+      50% { opacity: 0.2; }
+    }
+
+    .widget-tl { top: 20px; left: 20px; }
+    .widget-tl::before { border-right: none; border-bottom: none; }
+    
+    .widget-tr { top: 20px; right: 20px; }
+    .widget-tr::before { border-left: none; border-bottom: none; }
+
+    .widget-bl { bottom: 20px; left: 20px; }
+    .widget-bl::before { border-right: none; border-top: none; }
+
+    .widget-br { bottom: 20px; right: 20px; }
+    .widget-br::before { border-left: none; border-top: none; }
+
+    .fade-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    body.exit .fade-overlay { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <div class="space-overlay">
+    <div class="stars"></div>
+    <div class="hex-grid"></div>
+    <div class="nebula-glow" style="top: -10%; left: -10%;"></div>
+    <div class="nebula-glow" style="bottom: -10%; right: -10%; background: radial-gradient(circle, rgba(255, 255, 255, 0.02), transparent 70%);"></div>
+    <div class="scanning-line"></div>
+    
+    <!-- Falling stars will be generated by JS for realism -->
+  </div>
+
+  <div class="corner-widget widget-tl"></div>
+  <div class="corner-widget widget-tr"></div>
+  <div class="corner-widget widget-bl"></div>
+  <div class="corner-widget widget-br"></div>
+
+  <div class="side-elements">
+    <div class="side-panel left">
+      <div class="ui-bracket top"></div>
+      <div class="data-stream">
+        <div class="data-bit" style="animation-delay: 0s;"></div>
+        <div class="data-bit" style="animation-delay: 2s;"></div>
+      </div>
+      <div class="side-info">SYSTEM_INIT // NODE_7741</div>
+      <div class="ui-bracket bottom"></div>
+    </div>
+
+    <div class="side-panel right">
+      <div class="ui-bracket top"></div>
+      <div class="data-stream">
+        <div class="data-bit" style="animation-delay: 1s;"></div>
+        <div class="data-bit" style="animation-delay: 3s;"></div>
+      </div>
+      <div class="side-info">DATA_SYNC // SECTOR_C</div>
+      <div class="ui-bracket bottom"></div>
+    </div>
+  </div>
+
+  <div class="logo-container">
+    <svg class="logo-svg" viewBox="0 0 360 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#444"/>
+          <stop offset="30%" stop-color="#888"/>
+          <stop offset="50%" stop-color="#ffffff"/>
+          <stop offset="70%" stop-color="#888"/>
+          <stop offset="100%" stop-color="#444"/>
+        </linearGradient>
+        <filter id="starBlur">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <ellipse class="ring-outer" cx="182" cy="210" rx="148" ry="42"/>
+      <ellipse class="ring-ellipse" cx="182" cy="210" rx="140" ry="38"/>
+
+      <g class="monogram-group">
+        <path class="monogram-path"
+          d="M90 295 L175 85 L260 295 M115 230 L240 230"
+          stroke-dasharray="2000" stroke-dashoffset="0"
+        />
+        <path class="monogram-path"
+          d="M210 80 L210 300"
+          style="animation-delay: 1s;"
+          stroke-dasharray="2000" stroke-dashoffset="0"
+        />
+        <path class="monogram-path"
+          d="M185 195 L240 195"
+          style="animation-delay: 1.4s; stroke-width: 12;"
+          stroke-dasharray="2000" stroke-dashoffset="0"
+        />
+      </g>
+
+      <g class="star-ray" filter="url(#starBlur)">
+        <circle cx="263" cy="118" r="3" fill="white"/>
+        <line x1="263" y1="108" x2="263" y2="128" stroke="white" stroke-width="1.2" opacity="0.8"/>
+        <line x1="253" y1="118" x2="273" y2="118" stroke="white" stroke-width="1.2" opacity="0.8"/>
+      </g>
+
+      <g id="orbitDotGroup">
+        <circle id="orbitDot1" cx="42" cy="210" r="3.5" fill="#ffffff"/>
+        <circle id="orbitDot2" cx="320" cy="215" r="2.5" fill="#888" opacity="0.6"/>
+      </g>
+
+      <text class="name-text" x="181" y="360">ANUP HIREMANI</text>
+      <line class="underline-line" x1="81" y1="370" x2="281" y2="370"/>
+    </svg>
+  </div>
+
+  <button id="skipBtn">Skip Intro</button>
+  <div class="fade-overlay"></div>
+
+  <script>
+    const dot1 = document.getElementById('orbitDot1');
+    const dot2 = document.getElementById('orbitDot2');
+    const ringEl = document.querySelector('.ring-ellipse');
+    let t = 0, rt = 0;
+    const cx = 182, cy = 210, rx = 140, ry = 38;
+
+    function animate() {
+      t += 0.01;
+      rt += 0.015;
+
+      const x1 = cx + rx * Math.cos(t);
+      const y1 = cy + ry * Math.sin(t);
+      dot1.setAttribute('cx', x1);
+      dot1.setAttribute('cy', y1);
+      const scale1 = 0.7 + 0.3 * (1 - (y1 - (cy - ry)) / (2 * ry));
+      dot1.setAttribute('r', 3.5 * scale1);
+      dot1.style.opacity = 0.5 + 0.5 * scale1;
+
+      const x2 = cx + rx * Math.cos(t + Math.PI);
+      const y2 = cy + ry * Math.sin(t + Math.PI);
+      dot2.setAttribute('cx', x2);
+      dot2.setAttribute('cy', y2);
+      const scale2 = 0.7 + 0.3 * (1 - (y2 - (cy - ry)) / (2 * ry));
+      dot2.setAttribute('r', 2.5 * scale2);
+      dot2.style.opacity = 0.4 + 0.4 * scale2;
+
+      ringEl.style.opacity = 0.3 + 0.2 * Math.sin(rt);
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // High-Realism Falling Star Generator
+    function createFallingStar() {
+      const container = document.querySelector('.space-overlay');
+      if (!container) return;
+
+      const star = document.createElement('div');
+      star.className = 'falling-star';
+      
+      // Randomize starting position (Top and Left)
+      const startLeft = Math.random() * 80 - 20; // -20% to 60%
+      const startTop = Math.random() * 40 - 20; // -20% to 20%
+      
+      star.style.left = startLeft + '%';
+      star.style.top = startTop + '%';
+      
+      // Randomize speed for depth
+      const speed = 1.5 + Math.random() * 2; // 1.5s to 3.5s
+      star.style.animationDuration = speed + 's';
+      
+      container.appendChild(star);
+      
+      // Remove after animation finishes
+      setTimeout(() => {
+        star.remove();
+      }, speed * 1000);
+
+      // Schedule next star at random interval (0.5s to 2s)
+      const nextDelay = 500 + Math.random() * 1500;
+      setTimeout(createFallingStar, nextDelay);
+    }
+
+    // Start the generator immediately
+    createFallingStar();
+
+    // Enchantment: Automatic redirect after logo animation completes
+    const REDIRECT_DELAY = 6500; 
+    const redirectToHome = () => {
+      document.body.classList.add('exit');
+      setTimeout(() => {
+        window.location.href = "home.html?v=1";
+      }, 1200);
+    };
+
+    const redirectTimer = setTimeout(redirectToHome, REDIRECT_DELAY);
+
+    document.getElementById("skipBtn").onclick = () => {
+      clearTimeout(redirectTimer);
+      redirectToHome();
+    };
+  </script>
+</body>
+</html>

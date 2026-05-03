@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>AIH Portfolio</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 420'%3E%3Cpath d='M90 295 L175 85 L260 295 M115 230 L240 230' fill='none' stroke='white' stroke-width='30' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M210 80 L210 300' fill='none' stroke='white' stroke-width='30' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    // Gatekeeper: Force loading screen on every fresh visit or refresh
+    (function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (!urlParams.has('v')) {
+        window.location.href = 'index.html';
+        return;
+      }
+      // Clean the URL so the token doesn't stay in the address bar
+      window.history.replaceState({}, document.title, window.location.pathname);
+    })();
+
+    (function () {
+      const isMobileViewport = window.matchMedia("(max-width: 900px), (hover: none) and (pointer: coarse)").matches;
+
+      // Mobile browsers can hold stale cached HTML after deployment.
+      // Force one cache-busted refresh per tab session.
+      if (isMobileViewport) {
+        try {
+          const url = new URL(window.location.href);
+          const alreadyBusted = url.searchParams.has("cb");
+          const refreshedThisSession = sessionStorage.getItem("mobile-cache-busted") === "1";
+
+          if (!alreadyBusted && !refreshedThisSession) {
+            sessionStorage.setItem("mobile-cache-busted", "1");
+            url.searchParams.set("cb", String(Date.now()));
+            window.location.replace(url.toString());
+            return;
+          }
+
+          if (alreadyBusted) {
+            sessionStorage.setItem("mobile-cache-busted", "1");
+          }
+        } catch {
+          // Keep normal page flow if URL/session APIs are restricted.
+        }
+      }
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.style.colorScheme = "dark";
+    })();
+  </script>
+  <link rel="stylesheet" href="css/styles.css?v=20260312-1" />
+</head>
+<body>
+  <div class="solar-system-bg" id="solar-system-bg" aria-hidden="true">
+    <div class="solar-parallax" id="solar-parallax">
+      <div class="solar-stars"></div>
+      <div class="sun-core"></div>
+      <div class="solar-orbit orbit-1">
+        <span class="planet planet-1"></span>
+      </div>
+      <div class="solar-orbit orbit-2">
+        <span class="planet planet-2"></span>
+      </div>
+      <div class="solar-orbit orbit-3">
+        <span class="planet planet-3"></span>
+      </div>
+      <div class="solar-orbit orbit-4">
+        <span class="planet planet-4"></span>
+      </div>
+      <div class="solar-orbit orbit-5">
+        <span class="planet planet-5"></span>
+      </div>
+      <div class="solar-orbit orbit-6">
+        <span class="planet planet-6"><span class="saturn-ring"></span></span>
+      </div>
+      <div class="solar-orbit orbit-7">
+        <span class="planet planet-7"></span>
+      </div>
+      <div class="solar-orbit orbit-8">
+        <span class="planet planet-8"></span>
+      </div>
+    </div>
+  </div>
+  <div id="scroll-progress"></div>
+  <div class="bg-layer bg-grid"></div>
+  <div class="bg-layer bg-gradient"></div>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <header class="glass-nav-wrap" id="top">
+    <nav class="glass-nav container" aria-label="Main navigation">
+      <a href="#home" class="brand" aria-label="Anup I Hiremani Home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 360 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="navSilverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#888"/>
+                <stop offset="50%" stop-color="#fff"/>
+                <stop offset="100%" stop-color="#888"/>
+              </linearGradient>
+            </defs>
+            <ellipse class="ring-outer" cx="182" cy="210" rx="148" ry="42" fill="none" stroke="#666" stroke-width="2" opacity="0.3"/>
+            <ellipse class="ring-ellipse" cx="182" cy="210" rx="140" ry="38" fill="none" stroke="#aaa" stroke-width="3" opacity="0.5"/>
+            <path class="nav-monogram-path" d="M90 295 L175 85 L260 295 M115 230 L240 230" fill="none" stroke="url(#navSilverGrad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" />
+            <path class="nav-monogram-path" d="M210 80 L210 300" style="animation-delay: 0.2s;" fill="none" stroke="url(#navSilverGrad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" />
+            <path class="nav-monogram-path" d="M185 195 L240 195" style="animation-delay: 0.4s;" fill="none" stroke="url(#navSilverGrad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <span class="brand-text"><strong>AIH</strong><small>Anup I Hiremani</small></span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="desktop-menu">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <ul class="mobile-menu" id="mobile-menu">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </header>
+
+  <main>
+    <section class="hero section" id="home">
+      <div class="container hero-grid">
+        <aside class="hero-left reveal">
+          <div class="widget glass-card" data-count="12">
+            <p class="widget-label">Completed Projects</p>
+            <h3 class="widget-value" id="projects-count">0</h3>
+          </div>
+          <div class="widget glass-card" data-count="24">
+            <p class="widget-label">Technologies Known</p>
+            <h3 class="widget-value" id="tech-count">0</h3>
+          </div>
+          <a class="widget glass-card widget-link" href="https://github.com/anuphiremani04" target="_blank" rel="noreferrer noopener">
+            <p class="widget-label">GitHub Node</p>
+            <h3 class="widget-value">Open Profile</h3>
+          </a>
+        </aside>
+
+        <div class="hero-center reveal">
+          <div class="profile-node glass-card">
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="ring ring-3"></div>
+            <div class="profile-core">
+              <img src="assets/Profile.jpg" alt="Anup I Hiremani profile photo" class="profile-img-circle" />
+            </div>
+            <div class="profile-name-text">
+              Anup I Hiremani
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right reveal">
+          <h1>Anup I Hiremani</h1>
+          <p class="typing-line">
+            <span class="typing-prefix">System Role:</span>
+            <span id="typed-role"></span>
+            <span class="cursor">|</span>
+          </p>
+          <p class="hero-text">
+            I build intelligent, high-performance digital experiences with futuristic interfaces, animation systems, and scalable front-end architecture.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">View Projects</a>
+            <a href="AIH_RESUME.pdf#zoom=100" id="resume-preview-btn" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Resume Preview</a>
+            <a href="AIH_RESUME.pdf" id="resume-download-btn" download="Anup_I_Hiremani_Resume.pdf" class="btn btn-secondary">Download Resume</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about section" id="about">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Core Profile</p>
+          <h2>About Me</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-card glass-card reveal">
+            <h3>Who I Am</h3>
+            <p>
+              I'm a passionate full-stack developer with a love for creating intelligent, futuristic digital experiences. 
+              My expertise spans front-end architecture, interactive design systems, and scalable web applications that 
+              push the boundaries of what's possible on the web.
+            </p>
+          </div>
+          <div class="about-card glass-card reveal">
+            <h3>My Mission</h3>
+            <p>
+              I build seamless, performance-optimized applications that combine stunning visual design with robust 
+              functionality. I believe great software is the intersection of user experience, clean code, and innovation.
+            </p>
+          </div>
+          <div class="about-card glass-card reveal">
+            <h3>My Journey</h3>
+            <p>
+              With experience in web development, AI/ML integration, and modern tech stacks, I've worked on diverse 
+              projects—from lifestyle tracking apps to smart agriculture platforms. Every project teaches me something new.
+            </p>
+          </div>
+          <div class="about-card glass-card reveal">
+            <h3>Beyond Code</h3>
+            <p>
+              When I'm not coding, I explore emerging technologies, contribute to open-source projects, and constantly 
+              learn new frameworks and tools. I'm passionate about clean architecture and mentoring aspiring developers.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="skills section" id="skills">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Skill Matrix</p>
+          <h2>My Skills Universe</h2>
+        </div>
+
+        <div class="orbit-wrap glass-card reveal" id="orbit-wrap">
+          <div class="orbit-center">
+            <span>My Skills Universe</span>
+          </div>
+          <div class="orbits" id="orbits"></div>
+          <div class="orbit-tooltip" id="orbit-tooltip"></div>
+        </div>
+
+        <div class="orbit-carousel glass-card reveal" id="orbit-carousel"></div>
+
+      </div>
+    </section>
+
+    <section class="projects section" id="projects">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Project Command Deck</p>
+          <h2>Project Showcase Gallery</h2>
+        </div>
+        <div class="projects-grid reveal" id="projects-grid"></div>
+      </div>
+    </section>
+
+    <section class="contact section" id="contact">
+      <div class="container">
+        <div class="contact-panel glass-card reveal">
+          <div class="section-heading">
+            <p class="eyebrow">Secure Channel</p>
+            <h2>Contact Control Node</h2>
+            <p>Message will open directly in your default email app with pre-filled details.</p>
+          </div>
+          <form id="contact-form" novalidate>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required />
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project" required></textarea>
+
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </form>
+          <div id="form-notification" class="form-notification" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="social-footer section">
+    <div class="container">
+      <div class="social-panel glass-card reveal">
+        <h2>Connect With Me</h2>
+        <div class="social-links">
+
+
+          <a class="social-link" href="https://github.com/anuphiremani04" target="_blank" rel="noreferrer noopener" aria-label="GitHub">
+            <span class="social-icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" role="img" focusable="false">
+                <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.6 7.6 0 0 1 8 3.8c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z" fill="currentColor" />
+              </svg>
+            </span>
+            <span>GitHub</span>
+          </a>
+
+          <a class="social-link" href="https://www.linkedin.com/in/anuphiremani" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">
+            <span class="social-icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" role="img" focusable="false">
+                <path d="M0 1.15C0 .51.52 0 1.16 0h13.68C15.48 0 16 .52 16 1.15v13.7c0 .63-.52 1.15-1.16 1.15H1.16A1.16 1.16 0 0 1 0 14.85V1.15zM4.94 13.2V6.17H2.6v7.03h2.34zM3.77 5.2a1.36 1.36 0 1 0 0-2.72 1.36 1.36 0 0 0 0 2.72zM13.4 13.2V9.35c0-2.06-1.1-3.01-2.57-3.01-1.18 0-1.7.65-2 1.1v-1h-2.34c.03.66 0 7.03 0 7.03h2.34V9.28c0-.22.02-.44.08-.6.18-.44.58-.9 1.25-.9.88 0 1.23.67 1.23 1.65v3.77h2.01z" fill="currentColor" />
+              </svg>
+            </span>
+            <span>LinkedIn</span>
+          </a>
+
+          <a class="social-link" id="email-social-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=anuphiremani123@gmail.com" target="_blank" rel="noreferrer noopener" aria-label="Email">
+            <span class="social-icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" role="img" focusable="false">
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v.22L8 8.88.01 4.22V4z" fill="currentColor" />
+                <path d="M0 5.38v6.63A2 2 0 0 0 2 14h12a2 2 0 0 0 2-1.99V5.38l-7.55 4.4a1 1 0 0 1-1.01 0L0 5.38z" fill="currentColor" />
+              </svg>
+            </span>
+            <span>Email</span>
+
+          </a>
+        </div>
+        <!-- Footer inside Connect With Me -->
+        <footer class="main-footer" style="margin-top:2.2em;">
+          <div class="container">
+            <hr style="border: none; border-top: 1.5px solid rgba(255,255,255,0.08); margin: 2.2em 0 0.7em 0;" />
+            <p id="copyright-text-connect" class="footer-copyright" style="margin-bottom:1.2em;">
+              &copy; <span id="footer-year-connect"></span> Anup I Hiremani. All rights reserved.
+            </p>
+          </div>
+          <script>
+            // Set dynamic year for copyright in Connect With Me
+            document.getElementById('footer-year-connect').textContent = new Date().getFullYear();
+          </script>
+        </footer>
+      </div>
+    </div>
+  </footer>
+
+  <button id="scroll-top" class="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <div class="project-modal" id="project-modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <article class="modal-card glass-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" aria-label="Close project details">×</button>
+      <img id="modal-image" src="assets/projects/project-1.svg" alt="Project preview" />
+      <h3 id="modal-title"></h3>
+      <p id="modal-description"></p>
+      <div class="modal-tags" id="modal-tags"></div>
+      <div class="modal-actions">
+        <a id="modal-github" class="btn btn-secondary" href="#" target="_blank" rel="noreferrer noopener">GitHub</a>
+      </div>
+    </article>
+  </div>
+
+  <script src="js/roles.js?v=20260312-1"></script>
+  <script src="js/skillManager.js?v=20260312-1"></script>
+  <script src="js/projects.js?v=20260312-1"></script>
+  <script src="js/main.js?v=20260312-1"></script>
+</body>
+</html>
